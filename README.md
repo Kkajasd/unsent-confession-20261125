@@ -12,7 +12,7 @@ A two-part micro-confession for make.fun's "Unsent: The Micro-Confession Sprint"
 node main.ts
 ```
 
-The program writes the confession to `/output/entry.txt` (176 characters: a 21-character `To:` line and a 153-character message line).
+The program writes the confession to `/output/entry.txt` (183 characters: an 18-character `To:` line and a 163-character message line).
 
 ---
 

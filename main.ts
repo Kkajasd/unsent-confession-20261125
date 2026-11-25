@@ -1,14 +1,18 @@
-// Unsent: The Micro-Confession Sprint — make.fun entry.
-// Writes one two-part micro-confession to /output/entry.txt:
-// a "To:" line naming who it was meant for, then the unsent
-// message itself, one line, exactly as it was typed.
-const ENTRY =
-  "To: my little brother\n" +
-  "I was the one who broke your bike, not the neighbour's kid. I let you blame him all summer because saying sorry felt worse than watching you forgive him.\n";
-
 import { mkdirSync, writeFileSync } from "node:fs";
 
-// The grader mounts /output as a bind mount: create it if missing,
-// never delete it, and overwrite the entry file in place.
-mkdirSync("/output", { recursive: true });
-writeFileSync("/output/entry.txt", ENTRY, "utf8");
+const ENTRY =
+  "To: my grandmother\n" +
+  "I kept the voicemail where you sang happy birthday off-key because deleting it felt like hanging up on you one last time, and I still have not told mum I saved it.\n";
+
+const outDir = process.env.MAKEFUN_OUTPUT_DIR || "/output";
+mkdirSync(outDir, { recursive: true });
+
+// Guard: the confession must stay exactly two lines (To + message).
+const lines = ENTRY.split("\n").filter((l) => l.length > 0);
+if (lines.length !== 2) throw new Error(`expected 2 lines, got ${lines.length}`);
+
+function writeEntry(path: string, text: string): void {
+  writeFileSync(path, text, "utf8");
+}
+
+writeEntry(`${outDir}/entry.txt`, ENTRY);
